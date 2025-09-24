@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.*;
 
 public class BusOwnerController {
 
-    final BusOwnerService busOwnerService;
+    private final BusOwnerService busOwnerService;
 
 
     @PostMapping("/add")
-    public BusOwnerDTO createBusOwner(@RequestBody BusOwnerEntity busOwner){
+    public BusOwnerDTO createBusOwner(@RequestBody BusOwnerDTO busOwner){
         return busOwnerService.createBusowner(busOwner);
     }
 
+    @PostMapping("/login")
+    public String login(@RequestBody BusOwnerDTO user){
+        return busOwnerService.loginRequest(user);
+    }
 }

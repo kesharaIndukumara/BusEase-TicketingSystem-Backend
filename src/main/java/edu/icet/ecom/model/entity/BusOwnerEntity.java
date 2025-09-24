@@ -27,4 +27,5 @@ public class BusOwnerEntity {
     private Boolean RouterType_normal;
     private Boolean RouterType_special;
     private Long RouterPermitNumber;
+    private String email;
 }

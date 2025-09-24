@@ -5,5 +5,7 @@ import edu.icet.ecom.model.entity.BusOwnerEntity;
 
 public interface BusOwnerService {
 
-    BusOwnerDTO createBusowner(BusOwnerEntity busOwnerEntity);
+    BusOwnerDTO createBusowner(BusOwnerDTO busOwnerEntity);
+
+    String loginRequest( BusOwnerDTO user);
 }

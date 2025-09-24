@@ -1,6 +1,9 @@
 package edu.icet.ecom.model.dto;
 
 import edu.icet.ecom.util.BusType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +14,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BusOwnerDTO {
+    @Id
+    private Long id;
+
     private String busChassisNumber;
     private Long nic;
     private String fullName;
@@ -24,4 +30,5 @@ public class BusOwnerDTO {
     private Boolean RouterType_normal;
     private Boolean RouterType_special;
     private Long RouterPermitNumber;
+    private String email;
 }
