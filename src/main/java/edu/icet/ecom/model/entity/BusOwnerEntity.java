@@ -23,4 +23,8 @@ public class BusOwnerEntity {
     private String address;
     private String password;
     private BusType busType;
+    private Integer sheetsCount;
+    private Boolean RouterType_normal;
+    private Boolean RouterType_special;
+    private Long RouterPermitNumber;
 }

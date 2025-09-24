@@ -1,4 +1,4 @@
 package edu.icet.ecom.service;
 
-public class BusOwnerService {
+public interface BusOwnerService {
 }
