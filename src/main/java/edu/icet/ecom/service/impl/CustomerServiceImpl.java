@@ -1,4 +1,11 @@
 package edu.icet.ecom.service.impl;
 
-public class CustomerServiceImpl {
+import edu.icet.ecom.model.dto.CustomerDTO;
+import edu.icet.ecom.service.CustomerService;
+
+public class CustomerServiceImpl implements CustomerService {
+    @Override
+    public CustomerDTO createCustomer(CustomerDTO customer) {
+        return null;
+    }
 }
