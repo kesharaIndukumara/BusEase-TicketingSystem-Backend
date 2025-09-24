@@ -5,9 +5,11 @@ import edu.icet.ecom.model.entity.BusOwnerEntity;
 import edu.icet.ecom.repository.BusOwnerRepository;
 import edu.icet.ecom.service.BusOwnerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BusOwnerServiceImpl implements BusOwnerService {
@@ -18,6 +20,13 @@ public class BusOwnerServiceImpl implements BusOwnerService {
 
     @Override
     public BusOwnerDTO createBusowner(BusOwnerDTO busOwnerEntity) {
+        // Validation: check required fields
+        if (busOwnerEntity == null ||
+            busOwnerEntity.getEmail() == null || busOwnerEntity.getEmail().isBlank() ||
+            busOwnerEntity.getPassword() == null || busOwnerEntity.getPassword().isBlank() ||
+            busOwnerEntity.getFullName() == null || busOwnerEntity.getFullName().isBlank()) {
+            return null;
+        }
         BusOwnerEntity busOwner = modelMapper.map(busOwnerEntity, BusOwnerEntity.class);
         BusOwnerEntity savedBusOwner = busOwnerRepository.save(busOwner);
         return modelMapper.map(savedBusOwner, BusOwnerDTO.class);
@@ -32,11 +41,15 @@ public class BusOwnerServiceImpl implements BusOwnerService {
             return "Login Failed";
         }
 
-        // Lookup by email and compare password
         return busOwnerRepository.findByEmail(user.getEmail())
-                .map(entity -> entity.getPassword() != null && entity.getPassword().equals(user.getPassword())
-                        ? "Login Successful"
-                        : "Login Failed")
+                .map(entity -> {
+                    if (entity.getPassword() != null && entity.getPassword().equals(user.getPassword())) {
+//                        System.out.println("success");
+                        return "Login Successful";
+                    } else {
+                        return "Login Failed";
+                    }
+                })
                 .orElse("Login Failed");
     }
 }
