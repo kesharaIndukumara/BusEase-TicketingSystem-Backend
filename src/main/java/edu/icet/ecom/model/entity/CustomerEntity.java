@@ -11,6 +11,9 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    private Long version;
+
     private Long nic;
     private String fullName;
     private String username;

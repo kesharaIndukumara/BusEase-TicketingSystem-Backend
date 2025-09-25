@@ -14,13 +14,17 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl implements CustomerService {
 
     final ModelMapper modelMapper;
-
     final CustomerRepository customerRepository;
 
     @Override
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+        // Normalize: id=0 should be treated as new
+        if (customerDTO.getId() != null && customerDTO.getId() == 0) {
+            customerDTO.setId(null);
+        }
         CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
         CustomerEntity savedCustomer = customerRepository.save(customerEntity);
         return modelMapper.map(savedCustomer, CustomerDTO.class);
     }
 }
+
