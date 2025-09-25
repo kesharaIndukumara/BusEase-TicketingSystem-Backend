@@ -20,6 +20,7 @@ public class CustomerEntity {
     private String password;
     private String email;
     private Integer mobileNumber;
+    private String role;
 
 
 }

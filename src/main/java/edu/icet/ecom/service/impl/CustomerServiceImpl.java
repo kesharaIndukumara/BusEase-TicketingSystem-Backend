@@ -7,7 +7,7 @@ import edu.icet.ecom.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +22,34 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerDTO.getId() != null && customerDTO.getId() == 0) {
             customerDTO.setId(null);
         }
-        CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
-        CustomerEntity savedCustomer = customerRepository.save(customerEntity);
-        return modelMapper.map(savedCustomer, CustomerDTO.class);
+
+        if (customerDTO.getEmail()!=null && customerRepository.findByEmail(customerDTO.getEmail()).isPresent()) {
+//            System.out.println("Email already exists");
+            throw new IllegalArgumentException("Email already exists");
+        }
+        else {
+            CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
+            CustomerEntity savedCustomer = customerRepository.save(customerEntity);
+            return modelMapper.map(savedCustomer, CustomerDTO.class);
+        }
+
+    }
+
+    @Override
+    public String loginRequest(CustomerDTO customerDTO) {
+        if (customerDTO == null || customerDTO.getEmail() == null || customerDTO.getPassword() == null
+                || customerDTO.getEmail().isBlank() || customerDTO.getPassword().isBlank()) {
+            return "Login Failed";
+        }
+        try {
+            return customerRepository.findByEmail(customerDTO.getEmail())
+                    .map(entity -> (entity.getPassword() != null && entity.getPassword().equals(customerDTO.getPassword()))
+                            ? "Login Successful"
+                            : "Login Failed")
+                    .orElse("Login Failed");
+        } catch (IncorrectResultSizeDataAccessException e) {
+            // Duplicate email found; needs data cleanup + unique constraint
+            return "Login Failed";
+        }
     }
 }
-

@@ -1,12 +1,10 @@
 package edu.icet.ecom.model.dto;
 
-import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
 public class CustomerDTO {
-    @Id
-    private Long id;
+    private Long id; // removed @Id
 
     private Long nic;
     private String fullName;
@@ -14,5 +12,6 @@ public class CustomerDTO {
     private String password;
     private String email;
     private Integer mobileNumber;
+    private String role;
 
 }
