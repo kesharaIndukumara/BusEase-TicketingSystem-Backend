@@ -31,4 +31,5 @@ public class BusOwnerDTO {
     private Boolean RouterType_special;
     private Long RouterPermitNumber;
     private String email;
+    private String role;
 }
