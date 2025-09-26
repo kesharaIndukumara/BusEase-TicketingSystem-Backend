@@ -1,4 +1,7 @@
 package edu.icet.ecom.service;
 
-public class TicketService {
+import edu.icet.ecom.model.dto.TicketDTO;
+
+public interface TicketService {
+    void createTicket(TicketDTO ticketDTO);
 }
